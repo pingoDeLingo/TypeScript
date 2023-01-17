@@ -1,7 +1,11 @@
 class Resistor {
     r: number = 0;
-    constructor(r: number) {
+    maxPower: number = 0;
+    //maxVoltage: number = 0;  maxVoltage: number
+    constructor(r: number, maxPower: number,) {
         this.r = r;
+        this.maxPower = maxPower;
+        //this.maxVoltage = maxVoltage;
     }
     getCurrent(u: number): number {
         return u / this.r;
@@ -9,25 +13,12 @@ class Resistor {
     getPower(u: number): number {
         return u * this.getCurrent(u);
     }
-    getAmps(w: number, v:number): number {
-        return  w / v
-    }
-    getOhms(v: number, w:number): number{
-        return v / this.getAmps(w, v);
-    }
-    getWater(w: number, ml:number): number{
-        return Math.floor(20 + (60 /(4.19 * (ml / w))))
+    checkVoltage(u: number): boolean {
+        return this.getPower(u) <= this.maxPower;
     }
 }
-let r1 = new Resistor(2.5);
-console.log(r1.getPower(5));
 
-console.log(r1.getAmps(6,4));
+let r1 = new Resistor(220, 550);
+console.log(r1.checkVoltage(5));
+console.log(r1.checkVoltage(400));
 
-console.log(r1.getOhms(4,6))
-
-console.log(r1.getWater(1000, 1000))
-
-console.log(r1.getAmps(1000, 220))
-
-console.log(r1.getOhms(220, 1000))
